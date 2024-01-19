@@ -1,7 +1,6 @@
 package com.ccca.cccadriver
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -14,12 +13,10 @@ class ValidateCpfTest {
         assertEquals(true, isValid)
     }
 
-    @Test
-    fun `Deve testar se o cpf é inválido`() {
-        val invalidCpfs = listOf("8774824880", "", "11111111111")
-        for (cpf in invalidCpfs) {
-            val isValid = ValidateCpf.validateCpf(cpf)
-            assertEquals(false, isValid)
-        }
+    @ParameterizedTest
+    @ValueSource(strings = ["8774824880", "", "11111111111"])
+    fun `Deve testar se o cpf é inválido`(cpf: String) {
+        val isValid = ValidateCpf.validateCpf(cpf)
+        assertEquals(false, isValid)
     }
 }
