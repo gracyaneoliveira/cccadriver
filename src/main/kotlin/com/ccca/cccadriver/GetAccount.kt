@@ -1,17 +1,14 @@
 package com.ccca.cccadriver
 
-import java.util.*
+import org.springframework.stereotype.Service
+import java.util.UUID
 
-object GetAccount {
-    fun getAccount(accountId: UUID): Account {
-        return Account(
-            accountId = UUID.randomUUID(),
-            name = "user",
-            email = "user@mail.com",
-            cpf = "12345678910",
-            carPlate = "ERT",
-            isPassenger = false,
-            isDriver = true
-        )
+@Service
+class GetAccount(
+    private val accountRepository: AccountRepository
+) {
+
+    fun execute(accountId: UUID) : Account {
+        return accountRepository.findById(accountId).orElse(null)
     }
 }

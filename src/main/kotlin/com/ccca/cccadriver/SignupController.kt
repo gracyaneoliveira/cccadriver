@@ -1,16 +1,18 @@
 package com.ccca.cccadriver
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("signup")
-class SignupController {
+class SignupController(
+    private val signup: Signup
+) {
 
-    @PostMapping("/")
-    fun signup(@RequestBody account: Account): Any {
-        return Signup(account)
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    fun signup(@RequestBody account: Account): Response {
+        val accountSaved = signup.execute(account)
+        return Response(accountSaved.accountId!!)
     }
 }
